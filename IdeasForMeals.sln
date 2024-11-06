@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeasForMeals.API", "IdeasForMeals.API\IdeasForMeals.API.csproj", "{9EFB03F6-1238-460B-978C-D0CFE35CE7BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeasForMeals.Core", "IdeasForMeals.Core\IdeasForMeals.Core.csproj", "{24B73957-0013-428F-9BDD-4E85E34840A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9EFB03F6-1238-460B-978C-D0CFE35CE7BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EFB03F6-1238-460B-978C-D0CFE35CE7BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EFB03F6-1238-460B-978C-D0CFE35CE7BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EFB03F6-1238-460B-978C-D0CFE35CE7BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24B73957-0013-428F-9BDD-4E85E34840A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24B73957-0013-428F-9BDD-4E85E34840A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24B73957-0013-428F-9BDD-4E85E34840A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24B73957-0013-428F-9BDD-4E85E34840A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {066B74A5-3002-4F94-8D9D-3B17F2AB1D27}
+	EndGlobalSection
+EndGlobal
