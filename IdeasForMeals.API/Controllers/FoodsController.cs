@@ -11,7 +11,7 @@ public class FoodsController : ControllerBase
     public IActionResult Get()
     {
         string[] foods = ["Tomato", "Spaghetti", "Onion", "Courgette", "Carrot", "Red pepper", "Parmesan cheese"];
-
+ 
         return Ok(foods);
     }
 }
