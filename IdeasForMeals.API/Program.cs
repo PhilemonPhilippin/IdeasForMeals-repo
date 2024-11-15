@@ -1,5 +1,6 @@
 using IdeasForMeals.Core.Database;
 using IdeasForMeals.Core.Repositories;
+using IdeasForMeals.Core.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IFoodRepository, FoodRepository>();
+builder.Services.AddScoped<IUserFoodRepository, UserFoodRepository>();
+builder.Services.AddScoped<IIdeaForMealService, IdeaForMealService>();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddCors(options =>
