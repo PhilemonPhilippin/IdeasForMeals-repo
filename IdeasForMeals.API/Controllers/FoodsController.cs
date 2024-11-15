@@ -17,7 +17,7 @@ public class FoodsController(IFoodRepository foodRepository) : ControllerBase
     public async Task<IActionResult> Get()
     {
         List<Food> foods = await _foodRepository.ReadAll();
-        IEnumerable<FoodDto> foodDtos = foods.Select(f => f.MapToFoodDto());
+        IEnumerable<FoodDto> foodDtos = foods.Select(f => f.MapToDto());
 
         return Ok(foodDtos);
     }

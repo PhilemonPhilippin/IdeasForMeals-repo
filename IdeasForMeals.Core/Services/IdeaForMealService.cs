@@ -19,16 +19,16 @@ public class IdeaForMealService(IUserFoodRepository userFoodRepository) : IIdeaF
         Random random = new();
         List<Food> retval = [];
 
-        // Selecting only the Food included in the UserFood
+        // Selecting only the Food included in the UserFoods
         IQueryable<Food> source = _userFoodRepository.ReadAll().Select(uf => uf.Food);
 
         // Group by each FoodGroup
-        var proteinSource = source.Where(f => f.FoodGroup.Name == "protein");
         var carbohydrateSource = source.Where(f => f.FoodGroup.Name == "carbohydrate");
+        var proteinSource = source.Where(f => f.FoodGroup.Name == "protein");
         var vegetableSource = source.Where(f => f.FoodGroup.Name == "vegetable");
         var fruitSource = source.Where(f => f.FoodGroup.Name == "fruit");
 
-        // Adding into the list by (important) order : carb, prot, veggie then fruit)
+        // Adding to the list by (important) order : carb, prot, veggie then fruit)
         Food carbohydrate = await GetRandomFood(carbohydrateSource, random);
         retval.Add(carbohydrate);
 

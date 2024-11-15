@@ -24,4 +24,23 @@ public class UserFoodRepository(AppDbContext dbContext) : IUserFoodRepository
 
         return userFoods;
     }
+
+    public async Task<bool> UpdateOutOfDiet(List<Guid> foodIds)
+    {
+        // At the moment, there is only one user in the database, the "admin"
+        Guid admin = _dbContext.Users.First().Id;
+
+        IQueryable<UserFood> userFoods = _dbContext.UserFoods.Where(uf => uf.UserId == admin && foodIds.Contains(uf.FoodId));
+
+        if (userFoods.Any() == false) return false;
+
+        foreach (var userFood in userFoods)
+        {
+            userFood.IsCurrentDiet = false;
+        }
+
+        await _dbContext.SaveChangesAsync();
+
+        return true;
+    }
 }

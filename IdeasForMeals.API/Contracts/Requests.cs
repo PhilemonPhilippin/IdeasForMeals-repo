@@ -1,0 +1,1 @@
+﻿namespace IdeasForMeals.API.Contracts;

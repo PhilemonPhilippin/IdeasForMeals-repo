@@ -10,4 +10,5 @@ namespace IdeasForMeals.Core.Repositories;
 public interface IUserFoodRepository
 {
     IQueryable<UserFood> ReadAll();
+    Task<bool> UpdateOutOfDiet(List<Guid> foodIds);
 }

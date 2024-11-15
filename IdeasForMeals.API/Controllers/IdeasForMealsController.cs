@@ -5,21 +5,20 @@ using IdeasForMeals.Core.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace IdeasForMeals.API.Controllers
+namespace IdeasForMeals.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class IdeasForMealsController(IIdeaForMealService ideaForMealService) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class IdeasForMealsController(IIdeaForMealService ideaForMealService) : ControllerBase
+    private readonly IIdeaForMealService _ideaForMealService = ideaForMealService;
+
+    [HttpGet]
+    public async Task<IActionResult> Get()
     {
-        private readonly IIdeaForMealService _ideaForMealService = ideaForMealService;
+        List<Food> ideaForMeal = await _ideaForMealService.GetIdeaForMeal();
+        IdeaForMealDto dto = IdeaForMealMapper.MapToDto(ideaForMeal);
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            List<Food> ideaForMeal = await _ideaForMealService.GetIdeaForMeal();
-            IdeaForMealDto dto = IdeaForMealMapper.MapToDto(ideaForMeal);
-
-            return Ok(dto);
-        }
+        return Ok(dto);
     }
 }
