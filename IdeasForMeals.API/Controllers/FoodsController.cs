@@ -13,11 +13,11 @@ public class FoodsController(IFoodRepository foodRepository) : ControllerBase
 {
     private readonly IFoodRepository _foodRepository = foodRepository;
 
-    [HttpGet]
-    public async Task<IActionResult> Get()
+    [HttpGet("initial")]
+    public async Task<IActionResult> GetAllInitialSeed()
     {
-        List<Food> foods = await _foodRepository.ReadAll();
-        IEnumerable<FoodDto> foodDtos = foods.Select(f => f.MapToDto());
+        List<Food> foods = await _foodRepository.ReadAllInitialSeed();
+        List<FoodDto> foodDtos = foods.Select(f => f.MapToDto()).ToList();
 
         return Ok(foodDtos);
     }
