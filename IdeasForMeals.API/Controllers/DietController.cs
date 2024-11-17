@@ -24,7 +24,7 @@ public class DietController(IUserFoodRepository userFoodRepository, IFoodReposit
     }
 
     [HttpPut("out")]
-    public async Task<IActionResult> PutOutOfDiet(List<Guid> foodIds)
+    public async Task<IActionResult> RemoveFromDiet(List<Guid> foodIds)
     {
         bool updated = await _userFoodRepository.UpdateOutOfDiet(foodIds);
 

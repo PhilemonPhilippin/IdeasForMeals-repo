@@ -37,6 +37,7 @@ public class UserFoodRepository(AppDbContext dbContext) : IUserFoodRepository
         foreach (var userFood in userFoods)
         {
             userFood.IsCurrentDiet = false;
+            userFood.ModifiedAt = DateTime.UtcNow;
         }
 
         await _dbContext.SaveChangesAsync();
