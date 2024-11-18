@@ -34,5 +34,6 @@ public class Food : DateMetadata
     public Food()
     {
         Id = Guid.NewGuid();
+        FromInitialSeed = false;
     }
 }

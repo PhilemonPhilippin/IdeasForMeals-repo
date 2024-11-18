@@ -15,4 +15,9 @@ public class UserFood : DateMetadata
     public Food Food { get; set; }
 
     public bool IsCurrentDiet { get; set; }
+
+    public UserFood()
+    {
+        IsCurrentDiet = true;
+    }
 }

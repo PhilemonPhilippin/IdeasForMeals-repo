@@ -31,4 +31,21 @@ public class DietController(IUserFoodRepository userFoodRepository, IFoodReposit
         return updated ? NoContent() : NotFound();
     }
 
+    [HttpPost("in")]
+    public async Task<IActionResult> AddToDiet(List<FoodRequest> foodRequests)
+    {
+        if (foodRequests.Count > 0)
+        {
+            List<(string, Guid)> foods = foodRequests.Select(f => (f.Name, f.FoodGroupId)).ToList();
+
+            await _userFoodRepository.CreateIntoDiet(foods);
+
+            return NoContent();
+        }
+        else
+        {
+            return BadRequest();
+        }
+    }
+
 }

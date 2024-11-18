@@ -11,4 +11,5 @@ public interface IUserFoodRepository
 {
     IQueryable<UserFood> ReadAll();
     Task<bool> UpdateOutOfDiet(List<Guid> foodIds);
+    Task CreateIntoDiet(List<(string name, Guid foodGroupId)> foods);
 }

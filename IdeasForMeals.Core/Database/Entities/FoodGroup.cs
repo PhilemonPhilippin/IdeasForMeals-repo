@@ -16,9 +16,6 @@ public class FoodGroup : DateMetadata
     [MaxLength(100)]
     public string Name { get; set; }
 
-    [MaxLength(500)]
-    public string? Description { get; set; }
-
     public FoodGroup()
     {
         Id = Guid.NewGuid();

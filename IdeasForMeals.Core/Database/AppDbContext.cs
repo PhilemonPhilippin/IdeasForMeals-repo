@@ -18,7 +18,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Food>().HasIndex(f => f.Name).IsUnique();
-        modelBuilder.Entity<Food>().Property(f => f.FromInitialSeed).HasDefaultValue(false);
 
         modelBuilder.Entity<User>().HasIndex(u => u.Alias).IsUnique();
 
@@ -27,8 +26,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         // Many-to-Many
         modelBuilder.Entity<UserFood>().HasOne(uf => uf.Food).WithMany(uf => uf.UserFoods).HasForeignKey(uf => uf.FoodId);
         modelBuilder.Entity<UserFood>().HasOne(uf => uf.User).WithMany(uf => uf.UserFoods).HasForeignKey(uf => uf.UserId);
-
-        modelBuilder.Entity<UserFood>().Property(uf => uf.IsCurrentDiet).HasDefaultValue(true);
 
         modelBuilder.Seed();
     }
