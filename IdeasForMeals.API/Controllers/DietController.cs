@@ -23,7 +23,7 @@ public class DietController(IUserFoodRepository userFoodRepository, IFoodReposit
         return Ok(foodDtos);
     }
 
-    [HttpPut("out")]
+    [HttpDelete]
     public async Task<IActionResult> RemoveFromDiet(List<Guid> foodIds)
     {
         bool updated = await _userFoodRepository.UpdateOutOfDiet(foodIds);
@@ -31,7 +31,7 @@ public class DietController(IUserFoodRepository userFoodRepository, IFoodReposit
         return updated ? NoContent() : NotFound();
     }
 
-    [HttpPost("in")]
+    [HttpPost]
     public async Task<IActionResult> AddToDiet(FoodRequest foodRequest)
     {
 
