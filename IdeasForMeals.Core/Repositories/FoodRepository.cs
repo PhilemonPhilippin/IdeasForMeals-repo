@@ -21,7 +21,8 @@ public class FoodRepository(AppDbContext dbContext) : IFoodRepository
     public async Task<List<Food>> GetDiet()
     {
         // At the moment, there is only one user in the database, the "admin"
-        Guid admin = _dbContext.Users.First().Id;
+        User user = await _dbContext.Users.FirstAsync();
+        Guid admin = user.Id;
 
         var foods = _dbContext.UserFoods.Where(uf => uf.UserId == admin && uf.IsCurrentDiet).Include(uf => uf.Food).ThenInclude(f => f.FoodGroup).Select(uf => uf.Food).OrderBy(f => f.Name);
 

@@ -17,6 +17,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IFoodRepository, FoodRepository>();
 builder.Services.AddScoped<IUserFoodRepository, UserFoodRepository>();
+builder.Services.AddScoped<IFoodGroupRepository, FoodGroupRepository>();
 builder.Services.AddScoped<IIdeaForMealService, IdeaForMealService>();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 

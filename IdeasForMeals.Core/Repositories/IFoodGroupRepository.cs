@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace IdeasForMeals.Core.Repositories;
 
-public interface IUserFoodRepository
+public interface IFoodGroupRepository
 {
-    IQueryable<UserFood> ReadAll();
-    Task<bool> UpdateOutOfDiet(List<Guid> foodIds);
-    Task CreateIntoDiet(string name, Guid foodGroupId);
+    public Task<List<FoodGroup>> ReadAll();
 }
