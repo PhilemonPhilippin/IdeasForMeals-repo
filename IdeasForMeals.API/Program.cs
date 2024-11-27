@@ -1,6 +1,7 @@
 using IdeasForMeals.Core.Database;
 using IdeasForMeals.Core.Repositories;
 using IdeasForMeals.Core.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,9 +27,20 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+            policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
         });
 });
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.Authority = "https://philemonphilippin.eu.auth0.com/";
+    options.Audience = "https://localhost:7273/api";
+});
+
 
 var app = builder.Build();
 
@@ -43,6 +55,7 @@ app.UseHttpsRedirection();
 
 app.UseCors();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
