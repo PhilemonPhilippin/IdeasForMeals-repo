@@ -18,13 +18,12 @@ public class FoodRepository(AppDbContext dbContext) : IFoodRepository
         return await _dbContext.Foods.Where(f => f.FromInitialSeed).Include(f => f.FoodGroup).OrderBy(f => f.Name).ToListAsync();
     }
 
-    public async Task<List<Food>> GetDiet()
+    public async Task<List<Food>> GetDiet(string idAuth0)
     {
-        // At the moment, there is only one user in the database, the "admin"
-        User user = await _dbContext.Users.FirstAsync();
-        Guid admin = user.Id;
+        User user = await _dbContext.Users.FirstAsync(u => u.IdAuth0 == idAuth0);
+        Guid userId = user.Id;
 
-        var foods = _dbContext.UserFoods.Where(uf => uf.UserId == admin && uf.IsCurrentDiet).Include(uf => uf.Food).ThenInclude(f => f.FoodGroup).Select(uf => uf.Food).OrderBy(f => f.Name);
+        var foods = _dbContext.UserFoods.Where(uf => uf.UserId == userId && uf.IsCurrentDiet).Include(uf => uf.Food).ThenInclude(f => f.FoodGroup).Select(uf => uf.Food).OrderBy(f => f.Name);
 
         return await foods.ToListAsync();
     }

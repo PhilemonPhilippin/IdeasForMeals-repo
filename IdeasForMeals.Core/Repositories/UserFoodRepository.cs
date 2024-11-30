@@ -13,26 +13,24 @@ public class UserFoodRepository(AppDbContext dbContext) : IUserFoodRepository
 {
     private readonly AppDbContext _dbContext = dbContext;
 
-    public IQueryable<UserFood> ReadAll()
+    public IQueryable<UserFood> ReadAll(string idAuth0)
     {
-        // At the moment, there is only one user in the database, the "admin"
-        User user = _dbContext.Users.First();
-        Guid admin = user.Id;
+        User user = _dbContext.Users.First(u => u.IdAuth0 == idAuth0);
+        Guid userId = user.Id;
 
         // Get the user food relations for foods which are at the moment in the diet of a specific user.
         // Food and its FoodGroup included.
-        IQueryable<UserFood> userFoods = _dbContext.UserFoods.Where(uf => uf.UserId == admin && uf.IsCurrentDiet).Include(uf => uf.Food).ThenInclude(f => f.FoodGroup);
+        IQueryable<UserFood> userFoods = _dbContext.UserFoods.Where(uf => uf.UserId == userId && uf.IsCurrentDiet).Include(uf => uf.Food).ThenInclude(f => f.FoodGroup);
 
         return userFoods;
     }
 
-    public async Task<bool> UpdateOutOfDiet(List<Guid> foodIds)
+    public async Task<bool> UpdateOutOfDiet(List<Guid> foodIds, string idAuth0)
     {
-        // At the moment, there is only one user in the database, the "admin"
-        User user = await _dbContext.Users.FirstAsync();
-        Guid admin = user.Id;
+        User user = await _dbContext.Users.FirstAsync(u => u.IdAuth0 == idAuth0);
+        Guid userId = user.Id;
 
-        IQueryable<UserFood> userFoods = _dbContext.UserFoods.Where(uf => uf.UserId == admin && foodIds.Contains(uf.FoodId));
+        IQueryable<UserFood> userFoods = _dbContext.UserFoods.Where(uf => uf.UserId == userId && foodIds.Contains(uf.FoodId));
 
         if (userFoods.Any() == false) return false;
 
@@ -47,16 +45,15 @@ public class UserFoodRepository(AppDbContext dbContext) : IUserFoodRepository
         return true;
     }
 
-    public async Task CreateIntoDiet(string name, Guid foodGroupId)
+    public async Task CreateIntoDiet(string name, Guid foodGroupId, string idAuth0)
     {
-        // At the moment, there is only one user in the database, the "admin"
-        User user = await _dbContext.Users.FirstAsync();
-        Guid admin = user.Id;
+        User user = await _dbContext.Users.FirstAsync(u => u.IdAuth0 == idAuth0);
+        Guid userId = user.Id;
 
         Food? existingFood = await _dbContext.Foods.Where(f => f.Name.ToLower() == name.ToLower()).FirstOrDefaultAsync();
         if (existingFood is not null)
         {
-            UserFood? existingUserFood = await _dbContext.UserFoods.FindAsync(admin, existingFood.Id);
+            UserFood? existingUserFood = await _dbContext.UserFoods.FindAsync(userId, existingFood.Id);
             if (existingUserFood is not null)
             {
                 existingUserFood.IsCurrentDiet = true;
@@ -66,7 +63,7 @@ public class UserFoodRepository(AppDbContext dbContext) : IUserFoodRepository
             {
                 UserFood newUserFood = new()
                 {
-                    UserId = admin,
+                    UserId = userId,
                     FoodId = existingFood.Id
                 };
                 await _dbContext.AddAsync(newUserFood);
@@ -78,11 +75,11 @@ public class UserFoodRepository(AppDbContext dbContext) : IUserFoodRepository
             {
                 Name = name.ToLower(),
                 FoodGroupId = foodGroupId,
-                CreatedBy = admin,
+                CreatedBy = userId,
             };
             UserFood newUserFood = new()
             {
-                UserId = admin,
+                UserId = userId,
                 FoodId = newFood.Id
             };
             await _dbContext.AddAsync(newFood);

@@ -10,5 +10,5 @@ namespace IdeasForMeals.Core.Repositories;
 public interface IFoodRepository
 {
     Task<List<Food>> ReadAllInitialSeed();
-    Task<List<Food>> GetDiet();
+    Task<List<Food>> GetDiet(string idAuth0);
 }

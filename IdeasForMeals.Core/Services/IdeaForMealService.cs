@@ -14,13 +14,13 @@ public class IdeaForMealService(IUserFoodRepository userFoodRepository) : IIdeaF
 {
     private readonly IUserFoodRepository _userFoodRepository = userFoodRepository;
 
-    public async Task<List<Food>> GetIdeaForMeal()
+    public async Task<List<Food>> GetIdeaForMeal(string idAuth0)
     {
         Random random = new();
         List<Food> retval = [];
 
         // Selecting only the Food included in the UserFoods
-        IQueryable<Food> source = _userFoodRepository.ReadAll().Select(uf => uf.Food);
+        IQueryable<Food> source = _userFoodRepository.ReadAll(idAuth0).Select(uf => uf.Food);
 
         // Group by each FoodGroup
         var carbohydrateSource = source.Where(f => f.FoodGroup.Name == "carbohydrate");

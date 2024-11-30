@@ -9,5 +9,5 @@ namespace IdeasForMeals.Core.Services;
 
 public interface IIdeaForMealService
 {
-    public Task<List<Food>> GetIdeaForMeal();
+    public Task<List<Food>> GetIdeaForMeal(string idAuth0);
 }

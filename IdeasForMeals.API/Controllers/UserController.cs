@@ -18,7 +18,7 @@ public class UserController(IUserRepository userRepository) : ControllerBase
     {
         string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        if (userId is null) return NotFound("The user was not found.");
+        if (userId is null) return BadRequest("Error with the JWT provided.");
 
         bool userExist = await _userRepository.CheckUser(userId);
 

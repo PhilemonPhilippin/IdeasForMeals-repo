@@ -5,6 +5,7 @@ using IdeasForMeals.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace IdeasForMeals.API.Controllers;
 
@@ -18,7 +19,10 @@ public class IdeasForMealsController(IIdeaForMealService ideaForMealService) : C
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        List<Food> ideaForMeal = await _ideaForMealService.GetIdeaForMeal();
+        string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId is null) return BadRequest("Error with the JWT provided.");
+
+        List<Food> ideaForMeal = await _ideaForMealService.GetIdeaForMeal(userId);
         IdeaForMealDto dto = IdeaForMealMapper.MapToDto(ideaForMeal);
 
         return Ok(dto);
