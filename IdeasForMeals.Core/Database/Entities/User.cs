@@ -13,8 +13,8 @@ public class User : DateMetadata
     public Guid Id { get; set; }
 
     [Required]
-    [MaxLength(50)]
-    public string Alias { get; set; }
+    [MaxLength(300)]
+    public string IdAuth0 { get; set; }
 
     public ICollection<UserFood> UserFoods { get; set; } = new List<UserFood>();
 

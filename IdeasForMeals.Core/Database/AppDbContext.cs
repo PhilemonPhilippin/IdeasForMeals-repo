@@ -19,7 +19,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         modelBuilder.Entity<Food>().HasIndex(f => f.Name).IsUnique();
 
-        modelBuilder.Entity<User>().HasIndex(u => u.Alias).IsUnique();
+        modelBuilder.Entity<User>().HasIndex(u => u.IdAuth0).IsUnique();
 
         // Composite PK
         modelBuilder.Entity<UserFood>().HasKey(uf => new { uf.UserId, uf.FoodId });

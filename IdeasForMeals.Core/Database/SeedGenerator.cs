@@ -16,7 +16,7 @@ public class SeedGenerator
 
     public SeedGenerator()
     {
-        Admin = new User { Alias = "Admin#0000" };
+        Admin = new User { IdAuth0 = "auth0|admin" };
         FoodGroups = CreateFoodGroups();
         Foods = CreateFoods();
         UserFoods = CreateUserFoods();

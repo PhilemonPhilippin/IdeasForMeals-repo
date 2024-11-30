@@ -9,10 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 string environmentVariableName = "IdeasForMealsConnectionString";
 string connectionString = Environment.GetEnvironmentVariable(environmentVariableName, EnvironmentVariableTarget.User) ?? "Environment variable was not found.";
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -20,6 +17,7 @@ builder.Services.AddScoped<IFoodRepository, FoodRepository>();
 builder.Services.AddScoped<IUserFoodRepository, UserFoodRepository>();
 builder.Services.AddScoped<IFoodGroupRepository, FoodGroupRepository>();
 builder.Services.AddScoped<IIdeaForMealService, IdeaForMealService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddCors(options =>
@@ -44,7 +42,6 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
