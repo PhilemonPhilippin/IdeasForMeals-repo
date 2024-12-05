@@ -20,8 +20,9 @@ public class UserController(IUserRepository userRepository) : ControllerBase
 
         if (userId is null) return BadRequest("Error with the JWT provided.");
 
+        // If userExist == false then it means we had to create a User in the database.
         bool userExist = await _userRepository.CheckUser(userId);
 
-        return userExist ? Ok("User already exists.") : Ok("User was created.");
+        return Ok();
     }
 }

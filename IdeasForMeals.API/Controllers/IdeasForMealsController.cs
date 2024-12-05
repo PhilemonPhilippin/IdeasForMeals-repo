@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace IdeasForMeals.API.Controllers;
 
@@ -26,5 +28,12 @@ public class IdeasForMealsController(IIdeaForMealService ideaForMealService) : C
         IdeaForMealDto dto = IdeaForMealMapper.MapToDto(ideaForMeal);
 
         return Ok(dto);
+    }
+
+    [HttpPost("recipe")]
+    public async Task<IActionResult> GetRecipe(List<string> ingredients)
+    {
+        string recipe = await _ideaForMealService.GetRecipe(ingredients);
+        return Ok(new RecipeDto(recipe));
     }
 }
