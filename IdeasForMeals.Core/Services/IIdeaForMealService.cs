@@ -9,6 +9,7 @@ namespace IdeasForMeals.Core.Services;
 
 public interface IIdeaForMealService
 {
-    public Task<List<Food>> GetIdeaForMeal(string idAuth0);
+    Task<List<Food>> GetIdeaForMeal(string idAuth0);
     Task<string> GetRecipe(List<string> ingredients);
+    string GetPdf(string recipe);
 }

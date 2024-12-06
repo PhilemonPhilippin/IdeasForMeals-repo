@@ -5,6 +5,7 @@ using IdeasForMeals.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -35,5 +36,15 @@ public class IdeasForMealsController(IIdeaForMealService ideaForMealService) : C
     {
         string recipe = await _ideaForMealService.GetRecipe(ingredients);
         return Ok(new RecipeDto(recipe));
+    }
+
+    [HttpPost("recipe/pdf")]
+    public IActionResult GetPdf(PdfRequest recipe)
+    {
+        string fileFullPath = _ideaForMealService.GetPdf(recipe.Content);
+
+        var stream = new FileStream(fileFullPath, FileMode.Open, FileAccess.Read); 
+        var contentType = "application/pdf"; 
+        return new FileStreamResult(stream, contentType);
     }
 }
