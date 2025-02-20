@@ -14,7 +14,6 @@ public class UserFoodRepository(AppDbContext dbContext) : IUserFoodRepository
         Guid userId = user.Id;
 
         // Get the user food relations for foods which are at the moment in the diet of a specific user.
-        // Food and its FoodGroup included.
         IQueryable<UserFood> userFoods = _dbContext.UserFoods.Where(uf => uf.UserId == userId && uf.IsCurrentDiet).Include(uf => uf.Food).ThenInclude(f => f.FoodGroup);
 
         return userFoods;

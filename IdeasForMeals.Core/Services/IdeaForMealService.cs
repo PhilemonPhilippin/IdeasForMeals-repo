@@ -59,7 +59,7 @@ public class IdeaForMealService(IUserFoodRepository userFoodRepository) : IIdeaF
         OllamaApiClient ollama = new(uri);
         ollama.SelectedModel = "llama3.2";
 
-        string prompt = $"I am giving you three ingredients. One is from the carbohydrate food group, one from the protein food group and one from the vegetable : {ingredients[0]}, {ingredients[1]} and {ingredients[2]}. I want you to explain to me, as if it was a detailed cooking recipe, what are the different steps to prepare these ingredients. I want to know if I need to wash them, or peel them, or cook them, and I want to know how I can do that. The answer must not be longer than 5100 characters, but it can be shorter. You must structure your answer in three parts, one for each ingredient, and it must be plain text.";
+        string prompt = $"I am giving you three ingredients. One is from the carbohydrate food group, one from the protein food group and one from the vegetable : {ingredients[0]}, {ingredients[1]} and {ingredients[2]}. I want you to explain to me, like for a cooking recipe, what are the different steps to prepare these ingredients. I want to know if I need to wash it, or if I need to peel it and how to peel it, and I also want to know how to cook it (with what utensils, how long do I need to cook it, do I need to add fat, etc.). The answer must not be longer than 5100 characters, but it can be shorter. You must structure your answer in three parts, one for each ingredient, and it must be plain text.";
 
         var context = ollama.CompleteStreamingAsync(prompt);
 
@@ -81,7 +81,6 @@ public class IdeaForMealService(IUserFoodRepository userFoodRepository) : IIdeaF
 
         var page = document.AddPage();
 
-        // Get an XGraphics object for drawing on this page.
         var gfx = XGraphics.FromPdfPage(page);
 
         var font = new XFont("Verdana", 10, XFontStyleEx.Regular);
@@ -102,7 +101,7 @@ public class IdeaForMealService(IUserFoodRepository userFoodRepository) : IIdeaF
 
             if (charCount == maxCharsOnALine || totalChars == recipe.Length)
             {
-                // If we arrived at the last sentence.
+                // If we arrived at the last sentence, just write the final line.
                 if (totalChars == recipe.Length)
                 {
                     string finalLineToWrite = lineToWrite.ToString();
@@ -111,8 +110,9 @@ public class IdeaForMealService(IUserFoodRepository userFoodRepository) : IIdeaF
                 }
                 else
                 {
-                    // Stop at the previous word, draw the line.
-                    // And then keep the letters after the line in order to make the following line.
+                    // While we process trough the text and we arrive at the maxCharsOnALine number of characters, stop there and draw the line.
+                    // Meaning : stop at the previous word before the end of line (so that it does not break a word in two) and draw the line.
+                    // And then save the letters after the drawed line to start the next line.
                     string lineToWriteString = lineToWrite.ToString();
                     int indexOfLastSpace = lineToWriteString.LastIndexOf(" ");
                     string charactersAfterSpace = lineToWriteString.Substring(indexOfLastSpace);
@@ -130,12 +130,8 @@ public class IdeaForMealService(IUserFoodRepository userFoodRepository) : IIdeaF
             }
         }
 
-        // Save the document...
-        var filename = PdfFileUtility.GetTempPdfFullFileName("samples/RecipeIdea");
+        string filename = PdfFileUtility.GetTempPdfFullFileName("samples/RecipeIdea");
         document.Save(filename);
-
-        //PdfFileUtility.ShowDocument(filename);
-
         return filename;
     }
 }
