@@ -1,6 +1,0 @@
-@IdeasForMeals.API_HostAddress = http://localhost:5201
-
-GET {{IdeasForMeals.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

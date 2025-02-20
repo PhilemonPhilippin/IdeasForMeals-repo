@@ -1,7 +1,6 @@
 ﻿using IdeasForMeals.API.Mappers;
 using IdeasForMeals.Core.Database.Entities;
 using IdeasForMeals.Core.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdeasForMeals.API.Controllers;

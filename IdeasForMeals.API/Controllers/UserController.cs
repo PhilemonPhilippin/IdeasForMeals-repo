@@ -1,6 +1,5 @@
 ﻿using IdeasForMeals.Core.Repositories;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -20,8 +19,7 @@ public class UserController(IUserRepository userRepository) : ControllerBase
 
         if (userId is null) return BadRequest("Error with the JWT provided.");
 
-        // If userExist == false then it means we had to create a User in the database.
-        bool userExist = await _userRepository.CheckUser(userId);
+        await _userRepository.EnsureUserCreated(userId);
 
         return Ok();
     }

@@ -3,12 +3,8 @@ using IdeasForMeals.API.Mappers;
 using IdeasForMeals.Core.Database.Entities;
 using IdeasForMeals.Core.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
 using System.Security.Claims;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace IdeasForMeals.API.Controllers;
 

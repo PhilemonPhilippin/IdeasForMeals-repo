@@ -1,5 +1,4 @@
-﻿using IdeasForMeals.Core.Database;
-using IdeasForMeals.Core.Database.Entities;
+﻿using IdeasForMeals.Core.Database.Entities;
 using IdeasForMeals.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.AI;
@@ -7,12 +6,7 @@ using OllamaSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using PdfSharp.Quality;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace IdeasForMeals.Core.Services;
 
